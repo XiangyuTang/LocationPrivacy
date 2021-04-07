@@ -1,4 +1,4 @@
-from flask import Flask,render_template
+from flask import Flask, render_template, jsonify, request,json
 import sqlite3
 
 app = Flask(__name__)
@@ -54,6 +54,29 @@ def settings():
 @app.route('/signup')
 def signup():
 	return render_template("signup.html")
+
+@app.route('/header')
+def header():
+	return render_template("header.html")
+
+@app.route('/process_ajax',methods=['POST'])
+def process():
+	if (request.method=='POST'):
+		arr = request.json.get('arr_list')
+		arr = json.loads(arr)
+		arr = "".join(arr)
+		protect_op = request.json.get('protect_option')
+		attack_op = request.json.get('attack_option')
+		ag_op = request.json.get('ag_option')
+
+		print(protect_op,attack_op,ag_op)
+		print("string arr:",arr)
+		if(arr=='12'):
+			print("Yeah!")
+
+	url = "https://maplab.amap.com/share/mapv/aa3b5a63b99f0af3ef7fd82a2a51d8fc"
+	return jsonify({"success": 200, "msg": "成功", "url": url})
+
 
 #
 # @app.route('/movie')
